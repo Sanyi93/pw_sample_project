@@ -1,0 +1,17 @@
+{
+  "name": "pw_sample_project",
+  "version": "1.0.0",
+  "description": "Playwright Sample Project Testing UI &amp; API using POM &amp; Fixtures",
+  "main": "index.js",
+  "scripts": {},
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@playwright/test": "^1.58.2",
+    "@types/node": "^25.5.0"
+  },
+  "dependencies": {
+    "dotenv": "^17.3.1"
+  }
+}
