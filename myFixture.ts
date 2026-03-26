@@ -44,6 +44,8 @@ const test = testBase.extend<TestFixtures, WorkerFixtures>({
                 width: normalSnapshotSize.width || elementSnapshotSize.width || scrollableSnapshotSize.width,
                 height: normalSnapshotSize.height || elementSnapshotSize.height || scrollableSnapshotSize.height
             }
+            //setting snapshotsize to be used
+            await page.setViewportSize(customizedSnapshotSize);
 
             //selecting the snapshot size while visual check
             if(typeof snapshotOptions?.elementContent != "undefined"){
@@ -56,6 +58,8 @@ const test = testBase.extend<TestFixtures, WorkerFixtures>({
                     mask: allMasks
                 })
             }
+            //resetting the viewportSize
+            await page.setViewportSize(normalSnapshotSize);
         })
     },
 
