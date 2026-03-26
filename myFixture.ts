@@ -32,7 +32,7 @@ const test = testBase.extend<TestFixtures, WorkerFixtures>({
 
             //masks if needed
             const basicMasks: Locator[] = [];
-            const allMasks = [...basicMasks, ...snapshotOptions?.myMasks ?? []];
+            const allMasks = [...basicMasks, ...snapshotOptions?.myMasks ?? basicMasks];
 
             //assigning normal snapshot size
             const normalSnapshotSize = await page.viewportSize()!;
