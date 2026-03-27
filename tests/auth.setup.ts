@@ -1,7 +1,6 @@
 import path from 'path';
 import fs from 'fs';
 import test, { expect } from '../myFixture';
-import { LoginPage } from '../page-objects/LoginPage';
 
 const authFileNormalUser = path.join('.auth', './normal_user.json');
 const authFileAdminUser = path.join('.auth', './admin_user.json');
@@ -15,9 +14,8 @@ test('Authenticate normal user', async ({ loginPage, page }) => {
     await loginPage.loginButton.click();
     await expect(page).toHaveURL('inventory.html');
     
-    //TODO loginProcess after the LoginPage POM & Fixture Completion
     if(!fs.existsSync('.auth')){
-        fs.mkdirSync('auth');
+        fs.mkdirSync('.auth');
     }
 
     await page.context().storageState({ path: authFileNormalUser});
@@ -32,10 +30,8 @@ test('Authenticate admin user', async({ loginPage, page }) => {
     await loginPage.loginButton.click();
     await expect(page).toHaveURL('inventory.html');
     
-    //TODO LoginProcess after the LoginPage POM & Fixture Completion
-
         if(!fs.existsSync('.auth')){
-        fs.mkdirSync('auth');
+        fs.mkdirSync('.auth');
     }
 
     await page.context().storageState({ path: authFileAdminUser});
