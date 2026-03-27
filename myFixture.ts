@@ -49,11 +49,11 @@ const test = testBase.extend<TestFixtures, WorkerFixtures>({
 
             //selecting the snapshot size while visual check
             if(typeof snapshotOptions?.elementContent != "undefined"){
-                await expect.soft(page).toHaveScreenshot(`${ snapshotName}`, {
+                await expect.soft(page).toHaveScreenshot(`${ snapshotName }.png`, {
                     mask: allMasks,
                 })
             } else {
-                await expect.soft(page).toHaveScreenshot(`${ snapshotName}`, {
+                await expect.soft(page).toHaveScreenshot(`${ snapshotName }.png`, {
                     fullPage: true,
                     mask: allMasks
                 })
