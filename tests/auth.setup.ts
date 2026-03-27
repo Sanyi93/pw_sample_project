@@ -1,9 +1,6 @@
 import path from 'path';
 import fs from 'fs';
-import test, { expect } from '@playwright/test'
-
-//TODO: rewrite imports after fixture file completion
-
+import test, { expect } from '../myFixture';
 
 const authFileNormalUser = path.join('.auth', './normal_user.json');
 const authFileAdminUser = path.join('.auth', './admin_user.json');
