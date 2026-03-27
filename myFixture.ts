@@ -63,8 +63,38 @@ const test = testBase.extend<TestFixtures, WorkerFixtures>({
         })
     },
 
-    //TODO: WORKER-SCOPED FIXTURE
     //WORKER-SCOPED FIXTURES
+    //account
+    acquireAccount: [ async({ }, use) => {
+        const accountManager = new AccountManager();
+        await use((id: number) => accountManager.acquireAccount(id));
+    }, { scope: 'worker'}],
+
+    //storage state based on the account
+    workerStorageState: [ async({ browser, acquireAccount }, use) => {
+        const id = test.info().parallelIndex;
+        const fileName = path.resolve(test.info().project.outputDir, `auth/${id}.json`);
+
+        if(fs.existsSync(fileName)){
+            await use(fileName);
+            return;
+        }
+
+        const page =  await browser.newPage({ storageState: undefined});
+        const account = await acquireAccount(id);
+
+        //worker-scoped authentication based on the account ordered
+        await page.goto('https://saucedemo.com/');
+        await page.getByPlaceholder('Username').fill(account.username);
+        await page.getByPlaceholder('Password').fill(account.password);
+        await page.getByRole('button', { name: 'Login'}).click();
+
+        //saving authentication state
+        await expect(page).toHaveURL(/.*inventory.html/);
+        await page.context().storageState({ path: fileName});
+        await page.close();
+        await use(fileName);
+    }, { scope: 'worker'}],
 })
 
 export default test;
