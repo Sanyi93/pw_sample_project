@@ -16,4 +16,12 @@ export class LoginPage{
         this.errorButton = page.locator('//button[@class = "error-button"]');
         this.passwordValidationElement = page.locator('//h3[@data-test = "error"]');
     }
+
+    async login(username: string, password: string){
+        await this.usernamefield.click();
+        await this.usernamefield.fill(username);
+        await this.userpasswordfield.click();
+        await this.userpasswordfield.fill(password);
+        await this.loginButton.click();
+    }
 }
