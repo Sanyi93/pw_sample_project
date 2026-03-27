@@ -36,3 +36,8 @@ test('Authenticate admin user', async({ loginPage, page }) => {
 
     await page.context().storageState({ path: authFileAdminUser});
 })
+
+//TODO: 
+// 1 Some inventory page test/workflow of a purchase
+// 2 API tests incl. Controller possibly APIconfig/project; 
+// 3 Reporting & githubAction workflow
