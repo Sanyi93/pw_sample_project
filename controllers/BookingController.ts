@@ -1,11 +1,21 @@
 import { APIRequestContext } from "@playwright/test";
 
+export type Booking = {
+    firstname: string,
+    lastname: string,
+    totalprice: number,
+    depositpaid: boolean,
+    bookingdates: {
+        checkin: string,
+        checkout: string
+        },
+    additionalneeds: string
+}
+
 export class BookingController{
     constructor ( private request : APIRequestContext){}
 
-    //TODO: adjust the URL in the testfile for api test
-
-    async createBooking(bookingData: object){
+    async createBooking(bookingData: Booking){
         const response = await this.request.post('/booking', {
             headers: {
                 'Content-Type': 'application/json',
@@ -24,7 +34,7 @@ export class BookingController{
     async getMyToken(username: string, password: string): Promise<string> {
         const response = await this.request.post('/auth', {
             headers: {
-                'Conent-Type': 'application/json',
+                'Content-Type': 'application/json',
                 },
             data: {
                 username: username,
@@ -36,22 +46,20 @@ export class BookingController{
         return responseBody.token;
     }
 
-    async updateBooking(bookingId: number, updatedBooking: object, authToken: string){
-        const response = await this.request.put(`/booking/${bookingId}`, {
+    async updateBooking(bookingId: number, updatedBooking: Booking, authToken: string){
+        const response = await this.request.put(`booking/${bookingId}`, {
             headers: {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json',
                 'Cookie': `token=${authToken}`
             },
-            data: {
-                updatedBooking
-            }
+            data: updatedBooking
         });
         return response;
     }
 
     async deleteBooking(bookingId: number, authToken: string){
-        const response = await this.request.delete(`/booking${bookingId}`, {
+        const response = await this.request.delete(`/booking/${bookingId}`, {
             headers: {
                 'Content-Type': 'application/json',
                 'Cookie': `token=${authToken}`
