@@ -6,9 +6,15 @@ test.use({
     baseURL: 'https://restful-booker.herokuapp.com/'
 })
 
+let authToken: string;
+
+test.beforeEach('Get auth token', async ({ bookingController}) => {
+    authToken = await bookingController.getMyToken('admin', 'password123');
+    expect(authToken).toBeDefined();
+})
+    
 test('E2E Booking Workflow', async({ bookingController }) => {
     let bookingId: number;
-    let authToken: string;
 
     await test.step('Create a booking', async() => {
         const newBooking = {
@@ -29,19 +35,53 @@ test('E2E Booking Workflow', async({ bookingController }) => {
         expect(postresponse.status()).toBe(200);
 
         const postresponseBody = await postresponse.json();
-        expect.soft(postresponseBody.booking).toHaveProperty('firstname', 'Josh');
-        expect.soft(postresponseBody.booking).toHaveProperty('lastname', 'Matthews');
-        expect.soft(postresponseBody.booking.bookingdates).toHaveProperty('checkin', '2026-05-01');
-        expect.soft(postresponseBody.booking.bookingdates).toHaveProperty('checkout', '2026-05-03');
+        expect.soft(postresponseBody.booking).toHaveProperty('firstname', newBooking.firstname);
+        expect.soft(postresponseBody.booking).toHaveProperty('lastname', newBooking.lastname);
+        expect.soft(postresponseBody.booking.bookingdates).toHaveProperty('checkin', newBooking.bookingdates.checkin);
+        expect.soft(postresponseBody.booking.bookingdates).toHaveProperty('checkout', newBooking.bookingdates.checkout);
         console.log(JSON.stringify(postresponseBody));
 
-        bookingId = postresponseBody.bookingId;
+        bookingId = postresponseBody.bookingid;
     });
 
     await test.step('Doublecheck if the created booking really exists', async() => {
+        console.log(`The booking id searched for is `, bookingId);
         const checkResponse = await bookingController.checkBooking(bookingId);
+        expect.soft(checkResponse.ok()).toBeTruthy();
+        expect.soft(checkResponse.status()).toBe(200);
         const checkResponseBody = await checkResponse.json();
-        console.log('The booking created in the previous response possesses of the following qualitites: ', JSON.stringify(checkResponseBody));
+        console.log('The booking created in the previous response disposes of the following qualitites: ', JSON.stringify(checkResponseBody));
+    })
+
+    await test.step('Updating the created booking after authentication', async() => {
+        const updatedBooking = {
+            firstname: 'Josh',
+            lastname: 'Matthews',
+            totalprice: 1200,
+            depositpaid: true,
+            bookingdates: {
+                checkin: '2026-05-02',
+                checkout: '2026-05-04'
+            },
+            additionalneeds: 'Vegan food'
+        };
+
+        const updatedResponse = await bookingController.updateBooking(bookingId, updatedBooking, authToken);
+        expect.soft(updatedResponse.ok()).toBeTruthy();
+        expect.soft(updatedResponse.status()).toBe(200);
+        const updatedResponseBody = await updatedResponse.json();
+        console.log(`The booking with id ${bookingId} has been successfully updated as follows: `, JSON.stringify(updatedResponseBody));
+        expect.soft(updatedResponseBody.totalprice).toBe(1200);
+        expect.soft(updatedResponseBody.bookingdates.checkin).toBe(updatedBooking.bookingdates.checkin);
+        expect.soft(updatedResponseBody.bookingdates.checkout).toBe(updatedBooking.bookingdates.checkout);
+        expect.soft(updatedResponseBody.additionalneeds).toBe(updatedBooking.additionalneeds);
+    })
+
+    await test.step('Deleting the booking after authentication', async() => {
+        const deleteResponse = await bookingController.deleteBooking(bookingId, authToken);
+        expect.soft(deleteResponse.ok()).toBeTruthy();
+        expect.soft(deleteResponse.status()).toBe(201);
+        console.log(`The booking with id ${bookingId} has been successfully deleted`);
     })
 
 })
