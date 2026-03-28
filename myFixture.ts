@@ -3,6 +3,7 @@ import { Account, AccountManager } from './controllers/AccountManager';
 import { LoginPage } from './page-objects/LoginPage';
 import path from 'path';
 import fs from 'fs';
+import { BookingController } from './controllers/BookingController';
 
 export type visualCheckOptions = {
     myMasks: Locator[],
@@ -12,6 +13,7 @@ export type visualCheckOptions = {
 
 interface TestFixtures {
     loginPage: LoginPage,
+    bookingController: BookingController
     checkVisually: (snapshotName: string, snapshotOptions?: visualCheckOptions) => Promise<void>;
 }
 
@@ -25,6 +27,9 @@ const test = testBase.extend<TestFixtures, WorkerFixtures>({
     //TEST-SCOPED FIXTURES
     loginPage: async({ page }, use) => {
         await use(new LoginPage(page));
+    },
+    bookingController: async({ request }, use) => {
+        await use(new BookingController(request));
     },
 
     checkVisually: async({ page }, use) => {
