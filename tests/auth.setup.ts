@@ -2,8 +2,8 @@ import path from 'path';
 import fs from 'fs';
 import test, { expect } from '../myFixture';
 
-const authFileNormalUser = path.join('.auth', './normal_user.json');
-const authFileAdminUser = path.join('.auth', './admin_user.json');
+const authFileNormalUser = path.resolve('.auth', './normal_user.json');
+const authFileAdminUser = path.resolve('.auth', './admin_user.json');
 
 test('Authenticate normal user', async ({ loginPage, page }) => {
     await page.goto('/');
