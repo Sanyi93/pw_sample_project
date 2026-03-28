@@ -64,7 +64,7 @@ const test = testBase.extend<TestFixtures, WorkerFixtures>({
                 })
             }
             //resetting the viewportSize
-            await page.setViewportSize(normalSnapshotSize);
+            await page.setViewportSize(normalSnapshotSize)!;
         })
     },
 
@@ -85,7 +85,7 @@ const test = testBase.extend<TestFixtures, WorkerFixtures>({
             return;
         }
 
-        const page =  await browser.newPage({ storageState: undefined});
+        const page = await browser.newPage({ storageState: undefined});
         const account = await acquireAccount(id);
 
         //worker-scoped authentication based on the account ordered
