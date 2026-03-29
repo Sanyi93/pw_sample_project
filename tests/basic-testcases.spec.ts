@@ -50,7 +50,7 @@ test('Basic Purchase Workflow', async ({ checkVisually, inventoryPage, page}) =>
   await inventoryPage.continueButton.click();
   await checkVisually('Checkout-Overview');
   await inventoryPage.finishButton.click();
-  await checkVisually('Checkeout-Completed');
+  await checkVisually('Checkout-Completed');
 
   await inventoryPage.backHomeButton.click();
   await checkVisually('Inventory-Home-Page-After-Successfull-Checkout');
