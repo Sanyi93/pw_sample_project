@@ -33,7 +33,7 @@ jobs:
       if: always()
       uses: dorny/test-reporter@v3
       with:
-        name: Test Reporter Comment in PR
+        name: Test Reporter Comment
         path: test-results/results.xml
         reporter: jest-junit
 
