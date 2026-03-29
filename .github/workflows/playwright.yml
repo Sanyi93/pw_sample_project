@@ -24,7 +24,7 @@ jobs:
         USERNAME_N: ${{ secrets.USERNAME_N }}
         PWD_N: ${{ secrets.PWD_N }}
         USERNAME_A: ${{ secrets.USERNAME_A }}
-        PWD_A: ${{ secrets.USERNAME_N }}
+        PWD_A: ${{ secrets.PWD_A }}
     - uses: actions/upload-artifact@v6
       if: ${{ !cancelled() }}
       with:
