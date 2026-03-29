@@ -31,7 +31,7 @@ jobs:
 
     - name: Adding Test Report Comment
       if: always()
-      uses: dorny/test-reporter@v2
+      uses: dorny/test-reporter@v3
       with:
         name: Test Reporter Comment in PR
         path: test-results/results.xml
