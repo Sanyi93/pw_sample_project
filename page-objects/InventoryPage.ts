@@ -5,6 +5,7 @@ export class InventoryPage{
     backpackAddToCartButton: Locator;
     backpackRemoveFromCartButton: Locator;
     shoppingCartIcon: Locator;
+    shoppingCartBadge: Locator;
     checkoutButton: Locator;
     firstNameField: Locator;
     lastNameField: Locator;
@@ -20,6 +21,7 @@ export class InventoryPage{
         this.backpackAddToCartButton = page.locator('[data-test="add-to-cart-sauce-labs-backpack"]');
         this.backpackRemoveFromCartButton = page.locator('[data-test="remove-sauce-labs-backpack"]');
         this.shoppingCartIcon = page.locator('[data-test="shopping-cart-link"]');
+        this.shoppingCartBadge = page.locator('[data-test="shopping-cart-badge"]');
         this.firstNameField = page.getByPlaceholder('First Name');
         this.lastNameField = page.getByPlaceholder('Last Name');
         this.postalCodeField = page.getByPlaceholder('Zip/Postal Code');
