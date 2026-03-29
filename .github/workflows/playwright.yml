@@ -14,10 +14,13 @@ jobs:
     - uses: actions/setup-node@v6
       with:
         node-version: lts/*
+
     - name: Install dependencies
       run: npm ci
+
     - name: Install Playwright Browsers
       run: npx playwright install --with-deps
+
     - name: Run Playwright tests
       run: npx playwright test
       env:
@@ -25,9 +28,35 @@ jobs:
         PWD_N: ${{ secrets.PWD_N }}
         USERNAME_A: ${{ secrets.USERNAME_A }}
         PWD_A: ${{ secrets.PWD_A }}
-    - uses: actions/upload-artifact@v6
+
+    - name: Adding Test Report Comment
       if: always()
+      uses: dorny/test-reporter@v2
       with:
-        name: playwright-report
+        name: Test Reporter Comment in PR
+        path: test-results/results.xml
+        reporter: jest-junit
+
+    - name: Uploading Playwright Report  
+      if: always()
+      uses: actions/upload-artifact@v6
+      with:
+        name: Playwright Test Report
         path: playwright-report/
-        retention-days: 5
+        retention-days: 7
+    
+    - name: Uploading Monocart Test Report
+      if: always()
+      uses: actions/upload-artifact@v6
+      with:
+        name: Monocart Test Report
+        path: monocart-report/
+        retention-days: 7
+    
+    - name: Uploading Test Snapshots
+      if: always()
+      uses: actions/upload-artifact@v6
+      with:
+        name: Test Snapshots
+        path: tests/**/*.png
+        retention-days: 7
