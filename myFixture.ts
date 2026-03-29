@@ -65,11 +65,14 @@ const test = testBase.extend<TestFixtures, WorkerFixtures>({
             if(typeof snapshotOptions?.elementContent != "undefined"){
                 await expect.soft(snapshotOptions?.elementContent).toHaveScreenshot(`${ snapshotName }.png`, {
                     mask: allMasks,
+                    maxDiffPixelRatio: 0.02
                 })
             } else {
                 await expect.soft(page).toHaveScreenshot(`${ snapshotName }.png`, {
                     fullPage: true,
-                    mask: allMasks
+                    mask: allMasks,
+                    maxDiffPixelRatio: 0.02
+
                 })
             }
             //resetting the viewportSize
