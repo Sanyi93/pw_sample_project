@@ -48,18 +48,22 @@ const test = testBase.extend<TestFixtures, WorkerFixtures>({
             const normalSnapshotSize = await page.viewportSize()!;
 
             //assigning customized snapshot size
-            const elementSnapshotSize = await snapshotOptions?.elementContent.boundingBox() ?? { width: 0, height: 0};
-            const scrollableSnapshotSize = await snapshotOptions?.scrollableContent.boundingBox() ?? { width: 0, height: 0};
+            const elementSnapshotSize = await snapshotOptions?.elementContent?.boundingBox() ?? { width: 0, height: 0};
+            const scrollableSnapshotSize = await snapshotOptions?.scrollableContent?.boundingBox() ?? { width: 0, height: 0};
             const customizedSnapshotSize = {
                 width: elementSnapshotSize.width || scrollableSnapshotSize.width || normalSnapshotSize.width,
                 height: elementSnapshotSize.height || scrollableSnapshotSize.height || normalSnapshotSize.height
             }
+
             //setting snapshotsize to be used
-            await page.setViewportSize(customizedSnapshotSize);
+            await page.setViewportSize({
+                width: Math.ceil(Math.max(normalSnapshotSize.width, customizedSnapshotSize.width)),
+                height: Math.ceil(Math.max(normalSnapshotSize.height, customizedSnapshotSize.height))
+            });
 
             //selecting the snapshot size while visual check
             if(typeof snapshotOptions?.elementContent != "undefined"){
-                await expect.soft(page).toHaveScreenshot(`${ snapshotName }.png`, {
+                await expect.soft(snapshotOptions?.elementContent).toHaveScreenshot(`${ snapshotName }.png`, {
                     mask: allMasks,
                 })
             } else {
