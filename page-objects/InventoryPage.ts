@@ -1,5 +1,7 @@
 import { Locator, Page } from '@playwright/test';
 
+//Inventory Page Model -> all elements & Buttons used to perform basic purchase workflow
+//Potential Enhancement: all of the "general" buttons could be stored in a one "Button.ts" model
 export class InventoryPage{
     page: Page;
     backpackAddToCartButton: Locator;
@@ -14,8 +16,6 @@ export class InventoryPage{
     finishButton: Locator;
     backHomeButton: Locator;
     
-
-
     constructor(page: Page){
         this.page = page;
         this.backpackAddToCartButton = page.locator('[data-test="add-to-cart-sauce-labs-backpack"]');
