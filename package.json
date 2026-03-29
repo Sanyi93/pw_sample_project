@@ -9,7 +9,8 @@
   "license": "ISC",
   "devDependencies": {
     "@playwright/test": "^1.58.2",
-    "@types/node": "^25.5.0"
+    "@types/node": "^25.5.0",
+    "monocart-reporter": "^2.10.0"
   },
   "dependencies": {
     "dotenv": "^17.3.1"
