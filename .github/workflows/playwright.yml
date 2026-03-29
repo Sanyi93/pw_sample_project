@@ -26,7 +26,7 @@ jobs:
         USERNAME_A: ${{ secrets.USERNAME_A }}
         PWD_A: ${{ secrets.PWD_A }}
     - uses: actions/upload-artifact@v6
-      if: ${{ !cancelled() }}
+      if: always()
       with:
         name: playwright-report
         path: playwright-report/
