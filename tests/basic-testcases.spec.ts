@@ -1,4 +1,3 @@
-import { errorMonitor } from 'events';
 import test, { expect } from '../myFixture';
 
 const passwordValidationText = 'Epic sadface: Username and password do not match any user in this service';
@@ -14,7 +13,7 @@ test('Ping test', async ({ page, checkVisually }) => {
   await checkVisually('Swag-Labs-Login-Page');
 });
 
-test('Incorrect login test', async({ checkVisually, loginPage, page }) => {
+test('Incorrect login test', async({ checkVisually, loginPage }) => {
 
   await test.step('Negative Login process - providing username, password and clicking the login button', async() => {
     await loginPage.login(username, password)
@@ -25,4 +24,10 @@ test('Incorrect login test', async({ checkVisually, loginPage, page }) => {
     await expect.soft(loginPage.passwordValidationElement).toHaveText(passwordValidationText);
     await checkVisually('After-Unauthorized-Login');
   })
+});
+
+test('Basic Purchase Workflow', async ({ checkVisually, loginPage, inventoryPage, page}) => {
+  await page.goto('/inventory.hmtl');
+  await checkVisually('Invenotry-Page', { scrollableContent: page.locator('//div[@id="page_wrapper"]') })
+
 })
