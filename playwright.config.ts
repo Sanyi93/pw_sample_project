@@ -41,7 +41,7 @@ export default defineConfig({
       testMatch: /.*\.setup\.ts/,
     },
     {
-      name: 'Chromium',
+      name: 'BasicProject',
       use: { ...devices['Desktop Chrome'],
         baseURL: 'http://www.saucedemo.com',
         storageState: './.auth/normal_user.json'
