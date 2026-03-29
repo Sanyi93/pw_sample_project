@@ -3,7 +3,7 @@ import test, { expect } from '../myFixture';
 const passwordValidationText = 'Epic sadface: Username and password do not match any user in this service';
 const username = 'NonExistingUser';
 const password = 'ShallNotMatter';
-
+  
 test.beforeEach(async ({ page }) => {
   await page.goto('');
 })
@@ -27,7 +27,7 @@ test('Incorrect login test', async({ checkVisually, loginPage }) => {
 });
 
 test('Basic Purchase Workflow', async ({ checkVisually, inventoryPage, page}) => {  
-  
+
   await test.step('Landing on the page', async() => {
     await page.goto('/inventory.html');
     await page.waitForLoadState('domcontentloaded');
