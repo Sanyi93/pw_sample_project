@@ -9,6 +9,7 @@ jobs:
     timeout-minutes: 60
     runs-on: ubuntu-latest
     environment: Env1
+
     steps:
     - uses: actions/checkout@v6
     - uses: actions/setup-node@v6
@@ -19,7 +20,7 @@ jobs:
       run: npm ci
 
     - name: Install Playwright Browsers
-      run: npx playwright install --with-deps
+      run: npx playwright install chromium
 
     - name: Run Playwright tests
       run: npx playwright test
