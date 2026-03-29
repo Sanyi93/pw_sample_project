@@ -4,15 +4,17 @@ import { LoginPage } from './page-objects/LoginPage';
 import path from 'path';
 import fs from 'fs';
 import { BookingController } from './controllers/BookingController';
+import { InventoryPage } from './page-objects/InventoryPage';
 
 export type visualCheckOptions = {
-    myMasks: Locator[],
-    elementContent: Locator,
-    scrollableContent: Locator
+    myMasks?: Locator[],
+    elementContent?: Locator,
+    scrollableContent?: Locator
 }
 
 interface TestFixtures {
     loginPage: LoginPage,
+    inventoryPage: InventoryPage,
     bookingController: BookingController
     checkVisually: (snapshotName: string, snapshotOptions?: visualCheckOptions) => Promise<void>;
 }
@@ -27,6 +29,9 @@ const test = testBase.extend<TestFixtures, WorkerFixtures>({
     //TEST-SCOPED FIXTURES
     loginPage: async({ page }, use) => {
         await use(new LoginPage(page));
+    },
+    inventoryPage: async({ page}, use) => {
+        await use(new InventoryPage(page));
     },
     bookingController: async({ request }, use) => {
         await use(new BookingController(request));
@@ -46,8 +51,8 @@ const test = testBase.extend<TestFixtures, WorkerFixtures>({
             const elementSnapshotSize = await snapshotOptions?.elementContent.boundingBox() ?? { width: 0, height: 0};
             const scrollableSnapshotSize = await snapshotOptions?.scrollableContent.boundingBox() ?? { width: 0, height: 0};
             const customizedSnapshotSize = {
-                width: normalSnapshotSize.width || elementSnapshotSize.width || scrollableSnapshotSize.width,
-                height: normalSnapshotSize.height || elementSnapshotSize.height || scrollableSnapshotSize.height
+                width: elementSnapshotSize.width || scrollableSnapshotSize.width || normalSnapshotSize.width,
+                height: elementSnapshotSize.height || scrollableSnapshotSize.height || normalSnapshotSize.height
             }
             //setting snapshotsize to be used
             await page.setViewportSize(customizedSnapshotSize);
