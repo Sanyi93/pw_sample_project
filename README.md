@@ -10,7 +10,7 @@ Playwright Sample Project Testing UI &amp; API using POM &amp; Fixtures
  - "basic-testcases.spec.ts"-> besteht aus 3 elementaren UI-Tests, die die Funktionalitäten der Seite "https://www.saucedemo.com/" unten anderem durch Snapshots abtesten
 
  ## Die richtige Funktionalität der Tests und der ganzen Test Solution ist auch durch den folgenden Files gewährleistet:
- - /page-objects/*Files -> Die Files bilden die grundlegenden Elemente der Seiten (im Sinne des "Page-Object-Models")
+ - /page-objects/*Files -> Die Files bilden die grundlegenden Elemente der Seiten (im Sinne des "Page-Object-Models") ab
  - /controllers/BookingController.ts -> In diesem File befinden sich vor allem die Methoden, die zwecks API-Tests verwendet werden, was die Testslesbarkeit & Wartung verbessert
  - /controllers/AccountManager.ts -> Der Code stellt eine Basis für Accountauswahl dar, was weiter im "myFixture" File verwendet wird
  - /myFixture.ts -> Der File erweitert die PlaywrightTestBasis um weitere Funktionen/FUnktionalitäten oder sog. Fixtures,
