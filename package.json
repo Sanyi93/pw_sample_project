@@ -4,7 +4,9 @@
   "description": "Playwright Sample Project Testing UI &amp; API using POM &amp; Fixtures",
   "main": "index.js",
   "scripts": {
-    "test": "npx playwright test"
+    "test": "npx playwright test",
+    "test-ping": "npx playwright test --grep @ping --project=BasicProject",
+    "test-negative": "npx playwright test --grep @negative --project=BasicProject"
   },
   "keywords": [],
   "author": "",

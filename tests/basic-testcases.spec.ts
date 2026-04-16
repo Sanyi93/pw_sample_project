@@ -8,23 +8,31 @@ test.beforeEach(async ({ page }) => {
   await page.goto('');
 })
 
-test('Ping test', async ({ page, checkVisually }) => {
-  await expect(page).toHaveTitle(/Swag Labs/);
-  await checkVisually('Swag-Labs-Login-Page');
-});
+test.describe('Testing the most basic functionalities', { tag: ['@ping', '@negative']}, () => {
+  test('Ping test', async ({ page, checkVisually }) => {
 
-test('Incorrect login test', async({ checkVisually, loginPage }) => {
+    test.info().annotations.push({
+      type: 'Smoke',
+      description: 'Web Title Check'
+    });
 
-  await test.step('Negative Login process - providing username, password and clicking the login button', async() => {
-    await loginPage.login(username, password)
+    await expect(page).toHaveTitle(/Swag Labs/);
+    await checkVisually('Swag-Labs-Login-Page');
   });
 
-  await test.step('Checking the loginpage characteristics after an unsuccessful login process', async() => {
-    await expect.soft(loginPage.errorButton).toBeVisible();
-    await expect.soft(loginPage.passwordValidationElement).toHaveText(passwordValidationText);
-    await checkVisually('After-Unauthorized-Login');
+  test('Incorrect login test', async({ checkVisually, loginPage }) => {
+
+    await test.step('Negative Login process - providing username, password and clicking the login button', async() => {
+      await loginPage.login(username, password)
+    });
+
+    await test.step('Checking the loginpage characteristics after an unsuccessful login process', async() => {
+      await expect.soft(loginPage.errorButton).toBeVisible();
+      await expect.soft(loginPage.passwordValidationElement).toHaveText(passwordValidationText);
+      await checkVisually('After-Unauthorized-Login');
+    })
   })
-});
+})
 
 test('Basic Purchase Workflow', async ({ checkVisually, inventoryPage, page}) => {  
 
