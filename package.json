@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "Playwright Sample Project Testing UI &amp; API using POM &amp; Fixtures",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "test": "npx playwright test"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
