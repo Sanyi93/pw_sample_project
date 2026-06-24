@@ -1,4 +1,4 @@
-import { test as testBase, expect as baseExpect, Locator } from '@playwright/test';
+import { test as testBase, expect as baseExpect, Locator } from '@playwright/test'
 import { Account, AccountManager } from './controllers/AccountManager';
 import { LoginPage } from './page-objects/LoginPage';
 import path from 'path';
