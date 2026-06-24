@@ -66,6 +66,7 @@ export class BookingController{
             },
             data: updatesOnly
         });
+        return response;
     }
 
     async deleteBooking(bookingId: number, authToken: string){

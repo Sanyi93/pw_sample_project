@@ -77,6 +77,22 @@ test('E2E Booking Workflow', async({ bookingController }) => {
         expect.soft(updatedResponseBody.additionalneeds).toBe(updatedBooking.additionalneeds);
     })
 
+    await test.step('Partially updated the booking', async () => {
+        const theUpdates = {
+            lastname: 'Havasi',
+            totalprice: 200
+        };
+
+        const partiallyUpdatedResponse = await bookingController.partiallyUpdateBooking(bookingId, theUpdates, authToken);
+        expect.soft(partiallyUpdatedResponse.ok()).toBeTruthy();
+        expect.soft(partiallyUpdatedResponse.status()).toBe(200);
+        const partiallyUpdatedResponseBody = await partiallyUpdatedResponse.json();
+        console.log(`The booking with ${bookingId} has been successfully partially updated as follows: `, JSON.stringify(partiallyUpdatedResponseBody));
+        expect.soft(partiallyUpdatedResponseBody.lastname).toBe('Havasi');
+        expect.soft(partiallyUpdatedResponseBody.totalprice).toBe(200);
+
+    })
+
     await test.step('Deleting the booking after authentication', async() => {
         const deleteResponse = await bookingController.deleteBooking(bookingId, authToken);
         expect.soft(deleteResponse.ok()).toBeTruthy();
