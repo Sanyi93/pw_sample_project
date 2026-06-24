@@ -58,6 +58,16 @@ export class BookingController{
         return response;
     }
 
+    async partiallyUpdateBooking(bookingId: number, updatesOnly: Partial<Booking>, authToken: string){
+        const response = await this.request.patch(`/booking/${bookingId}`, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Cookie': `token=${authToken}`
+            },
+            data: updatesOnly
+        });
+    }
+
     async deleteBooking(bookingId: number, authToken: string){
         const response = await this.request.delete(`/booking/${bookingId}`, {
             headers: {
